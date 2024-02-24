@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["title"] = "Order";
+    var index = 1;
+}
+@model IEnumerable<OrderModel>
+
+
+<h1>List Order</h1>
+<a asp-action="Create" asp-controller="Category" class="text-lg-start">Add Category</a>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Order Name</th>
+            <th scope="col">Order Code  </th>
+            <th scope="col">Date Create</th>
+            <th scope="col">Status</th>
+            <th scope="col">Manager</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@index</th>
+
+                <td>@item.UserName</td>
+                <td>@item.OrderCode</td>
+                <td>@item.CreateAt</td>
+                <td>
+                    @if(item.Status == 1)
+                    {
+                        <span class="text text-success">Đơn hàng mới</span>
+                    }
+                    else
+                    {
+                        <span class="text text-danger">Đơn hàng đã xử lý</span>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-warning rounded" asp-action="View" asp-controller="OrderDetails" asp-route-OrderCode="@item.OrderCode">Show </a>
+                    <a class="btn btn-sm  btn-danger rounded" asp-action="Delete" asp-controller="OrderDetails" asp-route-Id="@item.Id">Delete</a>
+                </td>
+                
+            </tr>
+            index++;
+        }
+
+    </tbody>
+</table>

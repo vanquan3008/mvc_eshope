@@ -1,0 +1,98 @@
+﻿@using Web_Shopping.Models
+@model CartViewModel
+
+<section id="cart_items">
+	<div class="container">
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li class="active">Shopping Cart</li>
+			</ol>
+		</div>
+		<div class="table-responsive cart_info">
+			<table class="table table-condensed">
+				<thead>
+					<tr class="cart_menu">
+						<td class="image">Item</td>
+						<td class="description">Name</td>
+						<td class="price">Price</td>
+						<td class="quantity">Quantity</td>
+						<td class="total">Total</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model.cartView.Count > 0)
+					{
+						@foreach (var item in Model.cartView)
+						{
+						<tr>
+							<td class="cart_product" >
+                                    <a asp-action="Detail" asp-controller="Product" asp-route-id = "@item.ProductID" ><img width="40px" height="40px" src="~/media/products/@item.image" alt=""></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">@item.ProductName</a></h4>
+								<p>ID: @item.ProductID</p>
+							</td>
+							<td class="cart_price">
+								<p>$@item.Price</p>
+							</td>
+							<td class="cart_quantity">
+								<div class="cart_quantity_button">
+									<a class="cart_quantity_up" asp-action="Increase" asp-controller="Cart" asp-route-id = "@item.ProductID"> + </a>
+									<input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
+									<a class="cart_quantity_down" asp-action="Decrease" asp-controller="Cart" asp-route-id="@item.ProductID"> - </a>
+								</div>
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">$@item.Total.ToString()</p>
+							</td>
+								<td style="padding:20px;">
+									<a class="cart_quantity_delete" asp-action="Remove" asp-controller="Cart" asp-route-id="@item.ProductID">
+										<button height="36px" width="60px" style="background-color : red; font-size :14px ; color : #fff ; border:none; border-radius:6px;"> Remove</button>
+                                    </a>
+                                </td>
+						</tr>
+						
+						} 
+						<tr >
+
+							@if (User.Identity?.IsAuthenticated ?? false)
+							{
+								<td colspan="4">
+									Grand Total :
+									<p class="ca4rt_total_price"> @Model.TotalAllCart.ToString()</p>
+								</td>
+								<td >
+									<a asp-action="Checkout" asp-controller="Checkout">
+										<button height="60px" width="120px" class="btn btn-check"> Check out</button>
+									</a>
+								</td>
+							}
+							else
+							{
+								<td colspan="5">
+									Grand Total :
+									<p class="ca4rt_total_price"> @Model.TotalAllCart.ToString()</p>
+								</td>
+							}
+                            <td>
+                                <a asp-action="RemoveAll" asp-controller="Cart">
+                                    <button height="60px" width="120px" class="btn btn-danger"> Remove all</button>
+                                </a>
+                            </td>
+                         </tr>
+						
+					}
+					else{
+						<td colspan="5">
+							<h4>Do not Product to Cart</h4>
+						</td>
+                    }
+				</tbody>
+       
+
+            </table>
+		</div>
+	</div>
+</section> <!--/#cart_items-->

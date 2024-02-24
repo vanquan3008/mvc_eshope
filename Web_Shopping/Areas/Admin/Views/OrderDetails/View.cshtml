@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["title"] = "Order Details";
+    var index = 1;
+}
+@model IEnumerable<OrderDetails>
+
+
+<h1>List Order</h1>
+<a asp-action="Create" asp-controller="Category" class="text-lg-start">Add Category</a>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">User Name </th>
+            <th scope="col">OrderCode</th>
+            <th scope="col">ProductId</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@index</th>
+
+                <td>@item.Id</td>
+                <td>@item.UserName</td>
+                <td>@item.OrderCode</td>
+                <td>@item.ProductId</td>
+
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+
+            </tr>
+            index++;
+        }
+
+    </tbody>
+</table>
